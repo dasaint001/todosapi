@@ -6,6 +6,10 @@ const TodoSchema = new Schema({
   todo: {
     type: String,
     required: [true, 'The todo text field is required']
+  },
+  userId: {
+    type: String,
+    required: [false, 'The user_id field is required']
   }
 })
 

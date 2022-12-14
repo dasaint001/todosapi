@@ -6,7 +6,7 @@ const Todo = require('../models/todos')
 router.get('/todos', async (req, res) => {
   //this will return all the data, exposing only the id and todo field to the client
   try {
-    const todos = await Todo.find({}, 'todo')
+    const todos = await Todo.find()
     if (!todos) {
       return res.status(400).json({
         success: false,
@@ -31,8 +31,8 @@ router.get('/todos', async (req, res) => {
 // Create a Todo
 router.post('/todos', async (req, res) => {
   try {
-    const { todo } = req.body
-    const todos = await Todo.create({todo})
+    const { todo, userId } = req.body
+    const todos = await Todo.create({todo, userId})
     if (!todos) {
       return res.status(400).json({
       success: false,
@@ -91,6 +91,29 @@ router.delete('/todos/:id', async (req, res) => {
     return res.status(200).json({
       success: true,
       message: 'Todo successfully deleted'
+    })
+  } catch (error){
+    return res.status(400).json({
+      success: false,
+      message: error.message
+    })
+  }
+})
+
+//get todo
+router.get('/todos/:id', async (req, res) => {
+  try {
+    const todo = await Todo.find({_id: req.params.id})
+    if (!todo) {
+      return res.status(404).json({
+        success: false,
+        message: 'Todo not found'
+      })
+    }
+    return res.status(200).json({
+      success: true,
+      message: 'Todo retrieved successfully',
+      todo: todo
     })
   } catch (error){
     return res.status(400).json({
