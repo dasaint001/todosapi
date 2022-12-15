@@ -103,7 +103,7 @@ router.delete('/todos/:id', async (req, res) => {
 //get todo
 router.get('/todos/:id', async (req, res) => {
   try {
-    const todo = await Todo.find({_id: req.params.id})
+    const todo = await Todo.findById({_id: req.params.id})
     if (!todo) {
       return res.status(404).json({
         success: false,
