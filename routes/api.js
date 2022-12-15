@@ -55,7 +55,7 @@ router.post('/todos', async (req, res) => {
 
 
 // Update a Todo
-router.patch('/todos/:id', async (req, res) => {
+router.put('/todos/:id', async (req, res) => {
   try {
     const { todo } = req.body
     const update = await Todo.findOneAndUpdate({_id: req.params.id}, {todo})
